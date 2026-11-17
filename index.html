@@ -1,511 +1,360 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mực &amp; Giấy — Ấn phẩm thiết kế</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luyện toán nhân chia lớp 3</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
-
 :root{
-  --paper:#FFFFFF;
-  --paper-alt:#F1F1F1;
-  --ink:#211922;
-  --ink-soft:#6A6A6A;
-  --rule:#E9E9E9;
-  --navy:#2B4A6F;
-  --navy-l:#DCE4EC;
-  --red:#E60023;
-  --red-dark:#AD081B;
-  --red-l:#FCE1E4;
-  --ochre:#A97A26;
-  --ochre-l:#F3E7CE;
-  --teal:#3E6B57;
-  --teal-l:#DCE7DF;
+  --bg:#fff6d6; --card:#ffffff; --ink:#1f2a44; --muted:#5b6785;
+  --accent:#2f6fed; --accent-ink:#ffffff; --ok:#1f9d55; --ok-bg:#d8f5e3;
+  --bad:#d6452f; --bad-bg:#ffe1db; --line:#1f2a44; --shadow:#1f2a44; --slot:#c9bf93;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
 }
-
-*{box-sizing:border-box; margin:0; padding:0;}
-
-html,body{ height:100%; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif; }
-
-.app{ height:100vh; display:flex; flex-direction:column; }
-
-/* ===== masthead ===== */
-.masthead{
-  background:var(--paper);
-  border-bottom:1px solid var(--rule);
-  padding:14px 28px;
-  display:flex; align-items:center; gap:14px;
-}
-.masthead .logo-mark{
-  width:36px; height:36px; border-radius:50%; background:var(--red);
-  color:#fff; display:flex; align-items:center; justify-content:center;
-  font-family:'Poppins',sans-serif; font-weight:700; font-size:15px; flex:none;
-}
-.masthead h1{
-  font-family:'Poppins',sans-serif; font-weight:700;
-  font-size:19px; letter-spacing:-0.01em; color:var(--ink);
-}
-.masthead .tagline{
-  font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft);
-}
-
-/* ===== layout ===== */
-.layout{ flex:1; min-height:0; display:grid; grid-template-columns:170px minmax(0,1fr) minmax(0,1fr); }
-
-/* ===== sidenav ===== */
-.sidenav{
-  padding:16px 10px;
-  overflow-y:auto; min-height:0;
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-}
-.sidenav a{
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-  width:64px; padding:10px 4px; border-radius:16px;
-  text-decoration:none; color:var(--ink);
-  font-family:'Inter',sans-serif; font-size:11px; font-weight:500;
-  transition:background-color .15s ease;
-}
-.sidenav a svg{ width:22px; height:22px; stroke:var(--ink); }
-.sidenav a:hover{ background:var(--paper-alt); }
-.sidenav a.active{ background:var(--ink); color:#fff; }
-.sidenav a.active svg{ stroke:#fff; }
-.sidenav .meta{
-  margin-top:24px; font-family:'Inter',sans-serif; font-size:10px;
-  color:var(--ink-soft); line-height:1.7; text-align:center;
-}
-
-/* ===== catalog ===== */
-.catalog{ padding:20px 28px; min-width:0; overflow-y:auto; min-height:0; }
-.toolbar{ display:flex; flex-direction:column; gap:12px; margin-bottom:18px; }
-.search-wrap{ position:relative; }
-.search-wrap svg{
-  position:absolute; left:16px; top:50%; transform:translateY(-50%);
-  width:16px; height:16px; stroke:var(--ink-soft); pointer-events:none;
-}
-.toolbar input{
-  width:100%; font-family:'Inter',sans-serif; font-size:14px;
-  padding:12px 16px 12px 40px;
-  border:none; background:var(--paper-alt); color:var(--ink);
-  border-radius:24px;
-}
-.toolbar input:focus{ outline:2px solid var(--ink); outline-offset:1px; }
-
-.cat-row{ display:flex; gap:8px; flex-wrap:wrap; }
-.cat-btn{
-  font-family:'Inter',sans-serif; font-weight:600; font-size:12.5px;
-  padding:8px 16px; border-radius:20px; border:none; cursor:pointer;
-  background:var(--paper-alt); color:var(--ink);
-  transition:background-color .15s ease, color .15s ease;
-}
-.cat-btn:hover{ background:#e3e3e3; }
-.cat-btn.active{ background:var(--ink); color:#fff; }
-
-.count-row{
-  font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft);
-  margin-bottom:14px;
-}
-
-.grid{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:16px;
-}
-.card{
-  font-family:inherit; text-align:left; background:var(--paper);
-  border:none; cursor:pointer; padding:0;
-  display:flex; flex-direction:column; transition:box-shadow .15s ease;
-  border-radius:16px; overflow:hidden;
-}
-.card:hover{ box-shadow:0 6px 18px rgba(0,0,0,.14); }
-.card.selected{ box-shadow:0 0 0 2px var(--red); }
-.card:focus-visible{ outline:2px solid var(--red); outline-offset:2px; }
-
-.cover{
-  aspect-ratio:3/4; position:relative; overflow:hidden;
-  background-size:cover; background-position:top center; background-color:var(--paper-alt);
-  transition:transform .25s ease;
-}
-.card:hover .cover{ transform:scale(1.1); }
-
-.card-body{ padding:10px 12px 14px; display:flex; flex-direction:column; gap:6px; }
-.tag-pill{
-  display:inline-block; width:fit-content;
-  font-family:'Inter',sans-serif; font-weight:600; font-size:10px; letter-spacing:0.02em;
-  padding:3px 10px; border-radius:20px;
-}
-.tag-pill.cat-navy{ background:var(--navy-l); color:var(--navy); }
-.tag-pill.cat-red{ background:var(--red-l); color:var(--red-dark); }
-.tag-pill.cat-ochre{ background:var(--ochre-l); color:var(--ochre); }
-.tag-pill.cat-teal{ background:var(--teal-l); color:var(--teal); }
-.card-body h3{
-  font-family:'Poppins',sans-serif; font-weight:600; font-size:14px; line-height:1.3; color:var(--ink);
-}
-
-.code{
-  font-family:'Inter',sans-serif; font-size:11px; color:var(--ink-soft);
-}
-
-/* ===== detail panel ===== */
-.detail{
-  background:var(--paper-alt); padding:24px 26px; overflow-y:auto; min-height:0;
-}
-.detail-card{
-  background:var(--paper); border-radius:20px; padding:20px;
-  box-shadow:0 2px 10px rgba(0,0,0,.06);
-}
-.detail-eyebrow{
-  font-family:'Inter',sans-serif; font-weight:600; font-size:11px; letter-spacing:0.04em;
-  text-transform:uppercase; color:var(--ink-soft); margin-bottom:10px;
-}
-.proof{
-  position:relative; margin:0 0 18px;
-}
-.proof-inner{
-  height:600px; position:relative; overflow:hidden;
-  background-color:var(--paper-alt);
-  border-radius:16px;
-}
-.proof-img{
-  width:100%; height:100%; object-fit:contain; display:block;
-  user-select:none; -webkit-user-drag:none; touch-action:none;
-  transform-origin:center center; cursor:zoom-in;
-}
-.proof-hint{
-  font-family:'Inter',sans-serif; font-size:11px; color:var(--ink-soft);
-  margin:8px 2px 0; text-align:right;
-}
-
-.detail h2.title{
-  font-family:'Poppins',sans-serif; font-weight:700; font-size:20px; margin-bottom:4px; line-height:1.3;
-}
-.detail .code-line{
-  font-family:'Inter',sans-serif; font-size:12px; color:var(--ink-soft);
-  margin-bottom:18px;
-}
-.spec-table{ width:100%; border-collapse:collapse; margin-bottom:18px; }
-.spec-table tr{ border-bottom:1px solid var(--rule); }
-.spec-table tr:first-child{ border-top:1px solid var(--rule); }
-.spec-table td{ padding:8px 0; font-size:13px; vertical-align:top; }
-.spec-table td:first-child{
-  font-family:'Inter',sans-serif; font-weight:600; font-size:11px; color:var(--ink-soft);
-  width:40%; padding-right:10px;
-}
-.desc-label{
-  font-family:'Inter',sans-serif; font-weight:600; font-size:11px; letter-spacing:0.04em;
-  text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px;
-}
-.desc-text{ font-size:14px; line-height:1.65; color:var(--ink); }
-
-@media (max-width:980px){
-  .app{ height:auto; }
-  .layout{ grid-template-columns:1fr; }
-  .sidenav{
-    flex-direction:row; justify-content:center;
-    border-bottom:1px solid var(--rule);
-    padding:10px; overflow-y:visible;
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#16203a; --card:#223055; --ink:#fff4cf; --muted:#b5c0e0;
+    --accent:#ffcf3f; --accent-ink:#1f2a44; --ok:#6fe3a0; --ok-bg:#1d4a35;
+    --bad:#ff9a85; --bad-bg:#5a2a26; --line:#fff4cf; --shadow:#0a1020; --slot:#4a5a88;
   }
-  .sidenav .meta{ display:none; }
-  .catalog{ overflow-y:visible; }
-  .grid{ grid-template-columns:repeat(2,1fr); }
-  .detail{ overflow-y:visible; }
 }
-@media (max-width:520px){
-  .grid{ grid-template-columns:1fr 1fr; gap:10px; }
-  .masthead{ padding:12px 16px; }
-  .masthead h1{ font-size:16px; }
-  .catalog{ padding:16px; }
-  .detail{ padding:16px; }
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#16203a; --card:#223055; --ink:#fff4cf; --muted:#b5c0e0;
+  --accent:#ffcf3f; --accent-ink:#1f2a44; --ok:#6fe3a0; --ok-bg:#1d4a35;
+  --bad:#ff9a85; --bad-bg:#5a2a26; --line:#fff4cf; --shadow:#0a1020; --slot:#4a5a88;
 }
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2","Nunito","Segoe UI",system-ui,sans-serif;min-height:100vh;display:flex;justify-content:center;padding:16px}
+main{width:100%;max-width:520px}
+h1{font-size:1.6rem;margin:4px 0 12px;text-align:center}
+.bar{display:flex;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap}
+.chip{border:3px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;font-size:1rem;padding:6px 16px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.chip:focus-visible,button:focus-visible,input:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
+.score{display:flex;justify-content:space-around;font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--muted)}
+.score b{color:var(--ink);font-size:1.3rem}
+.lego{background:var(--card);border:4px solid var(--line);border-radius:28px;padding:8px 8px 4px;margin-bottom:16px;text-align:center}
+.lego svg{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+.lego.done{box-shadow:0 0 0 6px var(--accent);animation:hop .7s ease 3}
+@keyframes hop{50%{transform:translateY(-14px) scale(1.03)}}
+.tog{border:3px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-weight:700;font-size:1rem;padding:6px 16px;border-radius:999px;cursor:pointer}
+.tog[aria-pressed="true"]{background:var(--bad-bg);color:var(--bad)}
+#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
+.lego .cap{margin:0 0 6px;font-weight:700;color:var(--muted)}
+.pop{animation:pop .5s ease-out;transform-box:fill-box;transform-origin:center}
+@keyframes pop{0%{transform:translateY(-40px) scale(1.2);opacity:0}70%{transform:translateY(3px) scale(1)}100%{transform:none;opacity:1}}
+.card{background:var(--card);border:4px solid var(--line);border-radius:28px;box-shadow:0 8px 0 var(--shadow);padding:24px 18px;text-align:center}
+.problem{font-size:clamp(2.6rem,12vw,4.2rem);font-weight:800;letter-spacing:.02em;margin:0 0 18px;line-height:1.1}
+.row{display:flex;gap:10px;justify-content:center;align-items:center}
+input{width:9ch;font:inherit;font-size:2.2rem;font-weight:800;text-align:center;border:4px solid var(--line);border-radius:18px;padding:6px;background:var(--bg);color:var(--ink)}
+button.go{font:inherit;font-size:1.4rem;font-weight:800;border:4px solid var(--line);background:var(--accent);color:var(--accent-ink);border-radius:18px;padding:10px 22px;cursor:pointer;box-shadow:0 5px 0 var(--shadow)}
+button.go:active{transform:translateY(4px);box-shadow:0 1px 0 var(--shadow)}
+.msg{min-height:4.2em;margin-top:18px;font-size:1.3rem;font-weight:700;border-radius:18px;padding:10px 12px;display:flex;align-items:center;justify-content:center}
+.msg.ok{background:var(--ok-bg);color:var(--ok)}
+.msg.bad{background:var(--bad-bg);color:var(--bad)}
+.end h2{font-size:1.7rem;margin:0 0 8px}
+.end p{font-size:1.2rem;font-weight:700;margin:0 0 18px;color:var(--muted)}
+[hidden]{display:none!important}
+.hint{margin-top:14px;color:var(--muted);font-size:.95rem;text-align:center}
+.shake{animation:shake .35s}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@media (prefers-reduced-motion:reduce){.shake,.pop{animation:none}}
 </style>
 </head>
 <body>
-<div class="app">
-
-  <header class="masthead">
-    <div class="logo-mark">M&amp;G</div>
-    <div>
-      <h1>Mực &amp; Giấy</h1>
-      <div class="tagline">Sách · Tạp chí · Tờ rơi · Mẫu thiết kế</div>
-    </div>
-  </header>
-
-  <div class="layout">
-    <nav class="sidenav">
-      <a href="#" class="active">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
-        Trang chủ
-      </a>
-      <a href="#">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        Sản phẩm
-      </a>
-      <a href="#">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/></svg>
-        Công ty
-      </a>
-      <div class="meta">
-        Xưởng in &amp; thiết kế<br>
-        Số 12, đường Lê Lợi<br>
-        08:00 – 17:30, T2–T7
-      </div>
-    </nav>
-
-    <main class="catalog">
-      <div class="toolbar">
-        <div class="search-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input id="search" type="text" placeholder="Tìm theo tên sản phẩm...">
-        </div>
-        <div class="cat-row" id="catRow">
-          <button type="button" class="cat-btn active" data-cat="all">Tất cả</button>
-          <button type="button" class="cat-btn" data-cat="Sách">Sách</button>
-          <button type="button" class="cat-btn" data-cat="Tạp chí">Tạp chí</button>
-          <button type="button" class="cat-btn" data-cat="Tờ rơi">Tờ rơi</button>
-          <button type="button" class="cat-btn" data-cat="Mẫu thiết kế">Mẫu thiết kế</button>
-        </div>
-      </div>
-      <div class="count-row" id="count"></div>
-      <div class="grid" id="grid"></div>
-    </main>
-
-    <aside class="detail" id="detail"></aside>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+  <h1>Luyện toán nhân chia</h1>
+  <div class="bar" role="group" aria-label="Chọn dạng toán">
+    <button class="chip" data-mode="mix" aria-pressed="true">Trộn</button>
+    <button class="chip" data-mode="mul" aria-pressed="false">Nhân</button>
+    <button class="chip" data-mode="div" aria-pressed="false">Chia</button>
+    <button class="tog" id="mute" aria-pressed="false" aria-label="Bật hoặc tắt âm thanh">🔊 Có tiếng</button>
   </div>
-
-</div>
-
+  <div class="score">
+    <span>Câu: <b id="qnum">1</b>/10</span>
+    <span>Đúng: <b id="right">0</b></span>
+  </div>
+  <div class="lego" id="legoBox">
+    <p class="cap" id="cap">Mỗi câu đúng thêm 1 mảnh Lego!</p>
+    <div id="lego" role="img" aria-label="Hình Lego đang được xây"></div>
+  </div>
+  <section class="card" id="play">
+    <p class="problem" id="problem" aria-live="polite">…</p>
+    <div class="row">
+      <input id="ans" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" aria-label="Đáp án" maxlength="4">
+      <button class="go" id="check">Kiểm tra</button>
+    </div>
+    <div class="msg" id="msg" role="status">Hãy nhập đáp án nhé!</div>
+  </section>
+  <section class="card end" id="end" hidden>
+    <h2 id="endTitle"></h2>
+    <p id="endText"></p>
+    <button class="go" id="again">Chơi lại</button>
+  </section>
+  <p class="hint">Mỗi lượt có 10 câu, mỗi câu trả lời một lần. Bấm Enter để kiểm tra.</p>
+</main>
 <script>
-const products = [
-  {id:1, img:"images/1.jpg", title:"Dequalinium Chloride trong điều trị viêm âm đạo", category:"Tạp chí", cat:"red", code:"TC-101",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm cho MIMS Doctor, 2020",
-   desc:"Trang bìa số chuyên đề tóm tắt một nghiên cứu dược lý, trình bày theo mảng màu lớn và khung bo tròn đặc trưng của ấn phẩm."},
-  {id:2, img:"images/2.jpg", title:"Tương đương dược động học DRL-Rituximab", category:"Mẫu thiết kế", cat:"teal", code:"TK-102",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm cho Dr. Reddy's",
-   desc:"Bản tóm tắt kết quả nghiên cứu lâm sàng, phối nền tím gradient cùng minh hoạ ghi chú viết tay để dẫn dắt mắt người đọc."},
-  {id:3, img:"images/3.jpg", title:"Pembrolizumab trong điều trị ung thư phổi", category:"Tạp chí", cat:"red", code:"TC-103",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm cho MIMS Oncology, 2022",
-   desc:"Trang bìa dạng sơ đồ luồng, dùng nền xanh đậm và các khối bo tròn để sắp xếp dữ liệu từ nhiều nghiên cứu lâm sàng."},
-  {id:4, img:"images/4.jpg", title:"Bạn có biết — Canxi hữu cơ và vô cơ", category:"Tờ rơi", cat:"ochre", code:"TR-104",
-   size:"21 × 30 cm", material:"Giấy Couche 150gsm", extra:"Ấn phẩm giáo dục sức khoẻ",
-   desc:"Tờ rơi so sánh hai loại canxi bổ sung, dùng hình bập bênh làm ẩn dụ trực quan cho phần mở đầu."},
-  {id:5, img:"images/5.jpg", title:"Vai trò canxi ở trẻ em", category:"Tờ rơi", cat:"ochre", code:"TR-105",
-   size:"21 × 30 cm", material:"Giấy Couche 150gsm", extra:"Ấn phẩm giáo dục sức khoẻ",
-   desc:"Tờ rơi minh hoạ hoạt hình cho phụ huynh, trình bày nhu cầu canxi theo độ tuổi bằng biểu đồ cột đơn giản."},
-  {id:6, img:"images/6.jpg", title:"Hiệu quả và an toàn của Fexofenadine", category:"Tờ rơi", cat:"ochre", code:"TR-106",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm chuyên đề viêm mũi dị ứng",
-   desc:"Tờ rơi chuyên môn nền tím trầm, kết hợp bản đồ số liệu và sơ đồ cơ chế bệnh học trong một bố cục nhiều lớp."},
-  {id:7, img:"images/7.jpg", title:"Bào tử Bacillus Clausii trong điều trị tiêu chảy do Rota", category:"Tờ rơi", cat:"ochre", code:"TR-107",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm giáo dục y khoa",
-   desc:"Tờ rơi nền xanh dương tươi, chia lưới nhiều khối thông tin với icon minh hoạ để dễ quét nội dung nhanh."},
-  {id:8, img:"images/8.jpg", title:"Hiệu quả và an toàn của Fexofenadine (bản 2)", category:"Tờ rơi", cat:"ochre", code:"TR-106b",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Bản in trùng với TR-106",
-   desc:"Cùng nội dung với ấn phẩm TR-106 — có thể là bản lưu trữ hoặc bản in lại, mình giữ lại để bạn đối chiếu."},
-  {id:9, img:"images/9.jpg", title:"Quản lý hen theo quan điểm bác sĩ và bệnh nhân", category:"Tạp chí", cat:"red", code:"TC-108",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm hợp tác MIMS x GSK, 2023",
-   desc:"Trang bìa tóm tắt hướng dẫn điều trị hen theo GINA, dùng bảng so sánh hai lộ trình điều trị làm trọng tâm."},
-  {id:10, img:"images/10.jpg", title:"Tối ưu hoá điều trị ung thư vú — Cập nhật ASCO 2019", category:"Tạp chí", cat:"red", code:"TC-109",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm cho MIMS Oncology, 2019",
-   desc:"Trang bìa dùng ảnh sự kiện hội nghị thực tế, phối cùng khối màu xanh đậm mang bản sắc thương hiệu ấn phẩm."},
-  {id:11, img:"images/11.jpg", title:"Nhiễm HPV — mối lo ngại ở cả nam và nữ giới", category:"Tờ rơi", cat:"ochre", code:"TR-110",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm giáo dục y khoa, đa trang",
-   desc:"Tờ rơi nhiều trang trình bày số liệu dịch tễ HPV, dùng minh hoạ cơ thể người để dẫn dắt bảng tỷ lệ ung thư liên quan."},
-  {id:12, img:"images/12.jpg", title:"Diagnosis of Non-Alcoholic Fatty Liver Disease", category:"Mẫu thiết kế", cat:"teal", code:"TK-111",
-   size:"21 × 29.7 cm (A4)", material:"Giấy Couche 150gsm", extra:"Ấn phẩm cho Sanofi, bản tiếng Anh",
-   desc:"Thiết kế infographic song ngữ cho nhãn hàng dược quốc tế, ưu tiên minh hoạ cơ thể người và biểu đồ tỷ lệ phần trăm lớn."},
-  {id:13, title:"Sản phẩm chờ cập nhật — 13", category:"Sách", cat:"navy", code:"S-113",
-   size:"— ", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:14, title:"Sản phẩm chờ cập nhật — 14", category:"Sách", cat:"navy", code:"S-114",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:15, title:"Sản phẩm chờ cập nhật — 15", category:"Sách", cat:"navy", code:"S-115",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:16, title:"Sản phẩm chờ cập nhật — 16", category:"Tạp chí", cat:"red", code:"TC-116",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:17, title:"Sản phẩm chờ cập nhật — 17", category:"Tạp chí", cat:"red", code:"TC-117",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:18, title:"Sản phẩm chờ cập nhật — 18", category:"Tạp chí", cat:"red", code:"TC-118",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:19, title:"Sản phẩm chờ cập nhật — 19", category:"Tạp chí", cat:"red", code:"TC-119",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:20, title:"Sản phẩm chờ cập nhật — 20", category:"Tờ rơi", cat:"ochre", code:"TR-120",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:21, title:"Sản phẩm chờ cập nhật — 21", category:"Tờ rơi", cat:"ochre", code:"TR-121",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:22, title:"Sản phẩm chờ cập nhật — 22", category:"Tờ rơi", cat:"ochre", code:"TR-122",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:23, title:"Sản phẩm chờ cập nhật — 23", category:"Tờ rơi", cat:"ochre", code:"TR-123",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:24, title:"Sản phẩm chờ cập nhật — 24", category:"Tờ rơi", cat:"ochre", code:"TR-124",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:25, title:"Sản phẩm chờ cập nhật — 25", category:"Mẫu thiết kế", cat:"teal", code:"TK-125",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:26, title:"Sản phẩm chờ cập nhật — 26", category:"Mẫu thiết kế", cat:"teal", code:"TK-126",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:27, title:"Sản phẩm chờ cập nhật — 27", category:"Mẫu thiết kế", cat:"teal", code:"TK-127",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:28, title:"Sản phẩm chờ cập nhật — 28", category:"Sách", cat:"navy", code:"S-128",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:29, title:"Sản phẩm chờ cập nhật — 29", category:"Tạp chí", cat:"red", code:"TC-129",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."},
-  {id:30, title:"Sản phẩm chờ cập nhật — 30", category:"Tờ rơi", cat:"ochre", code:"TR-130",
-   size:"—", material:"—", extra:"Chưa có ảnh",
-   desc:"Chưa có ảnh và mô tả chi tiết cho sản phẩm này. Cập nhật thêm khi có tư liệu thật."}
-];
-
-let selectedId = products[0].id;
-
-function cardHTML(p){
-  const bg = p.img ? ` style="background-image:url('${p.img}')"` : '';
-  return `<button class="card ${p.id===selectedId?'selected':''}" data-id="${p.id}" aria-label="${p.title}">
-    <div class="cover"${bg}></div>
-    <div class="card-body">
-      <span class="tag-pill cat-${p.cat}">${p.category}</span>
-      <h3>${p.title}</h3>
-      <span class="code">${p.code}</span>
-    </div>
-  </button>`;
-}
-
-function detailHTML(p){
-  const imgTag = p.img ? `<img class="proof-img" src="${p.img}" alt="${p.title}" draggable="false">` : '';
-  const hint = p.img ? `<div class="proof-hint">Bấm để phóng to · di chuyển chuột để xem · bấm lần nữa để thu về</div>` : '';
-  return `
-    <div class="detail-card">
-      <div class="detail-eyebrow">Xem chi tiết</div>
-      <div class="proof">
-        <div class="proof-inner">${imgTag}</div>
-      </div>
-      ${hint}
-      <h2 class="title">${p.title}</h2>
-      <div class="code-line">${p.code} · ${p.category}</div>
-      <table class="spec-table">
-        <tr><td>Kích thước</td><td>${p.size}</td></tr>
-        <tr><td>Chất liệu</td><td>${p.material}</td></tr>
-        <tr><td>Ghi chú</td><td>${p.extra}</td></tr>
-      </table>
-      <div class="desc-label">Mô tả chi tiết</div>
-      <p class="desc-text">${p.desc}</p>
-    </div>
-  `;
-}
-
-function setupZoom(){
-  const img = document.querySelector('.proof-img');
-  if(!img) return;
-  const container = img.closest('.proof-inner');
-  const ZOOM = 2.4;
-  let scale = 1, tx = 0, ty = 0;
-
-  function apply(withTransition){
-    img.style.transition = withTransition ? 'transform .25s ease' : 'none';
-    img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-    img.style.cursor = scale > 1 ? 'zoom-out' : 'zoom-in';
+(function(){
+  var TOTAL=10, model=null, lastModel=-1;
+  var MODELS=[
+  {n:"robot",p:[
+   ["#2f6fed",[["r",95,165,50,20,4]]],["#2f6fed",[["r",175,165,50,20,4]]],
+   ["#ffc300",[["r",108,130,24,35,3]]],["#ffc300",[["r",188,130,24,35,3]]],
+   ["#e63946",[["r",100,70,120,60,6]]],
+   ["#2fa84f",[["r",66,75,28,50,6]]],["#2fa84f",[["r",226,75,28,50,6]]],
+   ["#8d99ae",[["r",120,22,80,44,8]]],
+   ["#ffffff",[["c",144,44,8],["c",176,44,8]]],
+   ["#ff8c1a",[["r",156,4,8,18,2],["c",160,6,6]]]]},
+  {n:"máy bay",p:[
+   ["#f1f1f1",[["r",50,85,210,36,18]]],
+   ["#e63946",[["p","258,85 296,103 258,121"]]],
+   ["#e63946",[["p","52,85 32,48 72,48 90,85"]]],
+   ["#2f6fed",[["p","55,95 20,88 20,108 55,112"]]],
+   ["#2f6fed",[["p","130,110 190,110 160,160 120,160"]]],
+   ["#8d99ae",[["r",135,152,40,16,8]]],
+   ["#7ec8ff",[["c",105,100,7],["c",135,100,7],["c",165,100,7],["c",195,100,7]]],
+   ["#2a4d8f",[["p","225,88 250,88 256,100 225,100"]]],
+   ["#ffc300",[["r",60,109,160,6,3]]],
+   ["#3a3f58",[["r",226,121,6,18,2],["c",229,146,9]]]]},
+  {n:"xe hơi",p:[
+   ["#e63946",[["r",40,110,240,34,8]]],
+   ["#e63946",[["p","95,110 125,65 205,65 235,110"]]],
+   ["#bfe4ff",[["p","108,106 130,74 160,74 160,106"]]],
+   ["#bfe4ff",[["p","168,74 200,74 222,106 168,106"]]],
+   ["#3a3f58",[["c",95,148,24]]],["#3a3f58",[["c",225,148,24]]],
+   ["#c9ced8",[["c",95,148,10],["c",225,148,10]]],
+   ["#ffc300",[["r",268,116,14,12,3]]],
+   ["#ff8c1a",[["r",38,116,12,12,3]]],
+   ["#2f6fed",[["r",40,92,50,8,2],["r",52,100,6,10,1]]]]},
+  {n:"xe tăng",p:[
+   ["#3a3f58",[["r",40,125,240,45,22]]],
+   ["#8d99ae",[["c",72,147,14],["c",116,147,14],["c",160,147,14],["c",204,147,14],["c",248,147,14]]],
+   ["#2fa84f",[["r",55,100,210,28,4]]],
+   ["#2fa84f",[["p","265,100 295,125 265,128"]]],
+   ["#2fa84f",[["r",115,62,100,38,12]]],
+   ["#25863f",[["r",215,73,80,12,2]]],
+   ["#3a3f58",[["r",290,70,14,18,3]]],
+   ["#ff8c1a",[["r",150,50,30,12,4]]],
+   ["#ffc300",[["c",160,114,9]]],
+   ["#e63946",[["r",125,35,4,27,1],["p","129,35 149,41 129,47"]]]]},
+  {n:"tên lửa",p:[
+   ["#f1f1f1",[["r",130,60,60,90,10]]],
+   ["#e63946",[["p","130,62 160,10 190,62"]]],
+   ["#7ec8ff",[["c",160,95,16]]],
+   ["#2f6fed",[["p","130,110 95,152 130,152"]]],
+   ["#2f6fed",[["p","190,110 225,152 190,152"]]],
+   ["#2f6fed",[["p","150,135 170,135 170,165 150,165"]]],
+   ["#e63946",[["r",130,120,60,10,1]]],
+   ["#8d99ae",[["r",140,152,40,12,2]]],
+   ["#ff8c1a",[["p","142,164 178,164 160,188"]]],
+   ["#ffc300",[["p","150,164 170,164 160,180"]]]]}
+  ];
+  var R='#e63946',Y='#ffc300',B='#2f6fed',G='#2fa84f',O='#ff8c1a',K='#3a3f58',S='#8d99ae',W='#f1f1f1',L='#7ec8ff',P='#8e5bd9',N='#a0673a';
+  function r(x,y,w,h,e){return['r',x,y,w,h,e||0]}
+  function c(x,y,d){return['c',x,y,d]}
+  function p(s){return['p',s]}
+  function m(col){return[col,[].slice.call(arguments,1)]}
+  MODELS=MODELS.concat([
+  {n:'tàu thủy',p:[m(K,p('50,125 270,125 245,165 75,165')),m(W,r(90,95,140,30,3)),m(W,r(130,65,60,30,3)),m(R,r(150,38,20,27,2)),m(Y,r(147,32,26,8,2)),m(L,c(110,110,7),c(140,110,7),c(170,110,7),c(200,110,7)),m(L,r(140,73,40,12,2)),m(B,r(80,125,160,6,1)),m(R,r(98,60,3,35,1),p('101,60 122,66 101,72')),m(B,p('10,165 50,157 90,165 130,157 170,165 210,157 250,165 290,157 310,165 310,185 10,185'))]},
+  {n:'xe cứu hỏa',p:[m(R,r(40,95,170,45,6)),m(R,r(210,80,70,60,8)),m(L,p('218,88 262,88 270,108 218,108')),m(Y,r(50,82,140,8,2)),m(S,r(70,70,4,12),r(95,70,4,12),r(120,70,4,12),r(145,70,4,12)),m(K,c(85,145,20),c(235,145,20)),m(W,c(85,145,8),c(235,145,8)),m(B,r(240,68,30,10,3)),m(S,c(110,115,14)),m(Y,r(274,112,10,12,3))]},
+  {n:'ngôi nhà',p:[m(Y,r(70,95,180,80,2)),m(R,p('55,98 160,30 265,98')),m(N,r(145,125,34,50,2)),m(L,r(90,115,35,30,2)),m(L,r(195,115,35,30,2)),m(R,r(210,35,22,40,1)),m(Y,c(171,152,3)),m(G,r(10,175,300,10,2)),m(O,c(35,35,16)),m(W,c(250,25,10),c(268,28,12),c(285,25,9))]},
+  {n:'khủng long',p:[m(G,r(80,90,140,55,25)),m(G,p('85,95 15,135 90,135')),m(G,r(110,140,22,40,4),r(180,140,22,40,4)),m(G,p('200,95 215,40 245,40 235,100')),m(G,r(225,30,60,32,12)),m(W,c(268,42,5)),m(Y,p('100,92 115,70 130,92'),p('135,90 150,66 165,90'),p('170,90 185,66 200,90')),m(O,c(130,118,8),c(170,112,8),c(195,125,6)),m(R,r(262,55,22,5,2)),m(N,r(10,178,300,8,3))]},
+  {n:'xe buýt',p:[m(Y,r(30,70,260,75,10)),m(L,r(45,82,38,30,3),r(90,82,38,30,3),r(135,82,38,30,3),r(180,82,38,30,3)),m(L,r(250,82,30,30,3)),m(B,r(225,82,18,58,2)),m(R,r(30,118,260,8)),m(K,c(80,148,20),c(240,148,20)),m(W,c(80,148,8),c(240,148,8)),m(O,r(284,122,8,12,2)),m(R,r(130,58,60,12,3)),m(S,r(150,45,3,14,1),c(151,44,4))]},
+  {n:'trực thăng',p:[m(R,r(80,80,140,60,28)),m(R,p('215,95 290,88 290,108 215,112')),m(B,p('280,88 300,60 305,92')),m(L,p('92,92 135,92 135,118 85,118')),m(K,r(145,68,10,14,1)),m(K,r(60,60,190,8,4)),m(S,r(110,140,5,15,1),r(185,140,5,15,1)),m(S,r(90,155,120,6,3)),m(O,c(296,100,9)),m(Y,r(130,110,80,8,2))]},
+  {n:'tàu hỏa',p:[m(B,r(60,80,150,55,6)),m(R,r(40,50,75,85,4)),m(Y,r(34,42,87,10,3)),m(K,p('175,80 180,50 200,50 205,80'),r(172,44,36,8,2)),m(W,c(190,30,10),c(208,20,13),c(232,12,10)),m(L,r(55,65,45,30,3)),m(R,c(80,145,22),c(140,145,22),c(195,145,22)),m(Y,c(80,145,8),c(140,145,8),c(195,145,8)),m(Y,c(210,100,8)),m(K,r(10,168,300,8,2))]},
+  {n:'lâu đài',p:[m(S,r(70,95,180,80,2)),m(S,r(40,60,50,115,2),r(230,60,50,115,2)),m(S,r(130,60,60,40,2)),m(S,r(40,50,10,12,1),r(60,50,10,12,1),r(80,50,10,12,1),r(230,50,10,12,1),r(250,50,10,12,1),r(270,50,10,12,1)),m(N,r(135,125,50,50,25)),m(K,r(55,85,8,20,3),r(257,85,8,20,3),r(155,70,10,18,3)),m(R,r(158,35,3,28,1),p('161,35 190,44 161,53')),m(R,p('35,52 65,15 95,52'),p('225,52 255,15 285,52')),m(G,r(10,175,300,10,2)),m(Y,c(300,25,12))]},
+  {n:'thuyền buồm',p:[m(N,p('70,130 250,130 225,165 95,165')),m(K,r(158,30,5,100,1)),m(W,p('165,35 165,120 230,120')),m(Y,p('155,45 155,120 100,120')),m(R,p('158,30 185,36 158,42')),m(B,r(80,138,160,6)),m(L,c(130,152,5),c(160,152,5),c(190,152,5)),m(B,p('10,165 50,157 90,165 130,157 170,165 210,157 250,165 290,157 310,165 310,185 10,185')),m(O,c(40,40,18)),m(W,c(240,35,10),c(258,32,13))]},
+  {n:'con mèo',p:[m(O,r(105,110,110,70,30)),m(O,c(160,85,45)),m(O,p('118,60 124,20 152,48'),p('202,60 196,20 168,48')),m(G,c(142,80,8),c(178,80,8)),m(K,c(142,80,3),c(178,80,3)),m(R,p('152,92 168,92 160,102')),m(K,r(100,95,35,2,1),r(100,103,35,2,1),r(185,95,35,2,1),r(185,103,35,2,1)),m(O,r(215,100,18,70,9)),m(W,c(130,178,12),c(190,178,12)),m(N,r(150,45,4,16,1),r(160,42,4,18,1),r(170,45,4,16,1))]},
+  {n:'con cá',p:[m(O,r(80,70,170,70,35)),m(O,p('85,105 35,70 35,140')),m(R,p('130,72 160,35 195,72')),m(R,p('140,138 160,160 185,138')),m(Y,r(130,76,12,58),r(165,76,12,58)),m(W,c(220,95,10)),m(K,c(223,95,5)),m(K,r(240,108,12,3,1)),m(L,c(275,70,6),c(290,50,9),c(278,28,5)),m(G,p('20,185 30,145 40,185'),p('45,185 55,135 65,185'))]},
+  {n:'chim cánh cụt',p:[m(K,r(105,50,110,120,50)),m(W,r(125,85,70,80,35)),m(S,r(85,95,22,55,10),r(213,95,22,55,10)),m(B,r(120,82,80,10,4)),m(W,c(140,70,9),c(180,70,9)),m(K,c(142,70,4),c(178,70,4)),m(O,p('150,92 170,92 160,106')),m(O,p('115,170 135,170 125,184'),p('185,170 205,170 195,184')),m(R,r(125,35,70,18,6)),m(L,r(10,178,300,8,2))]},
+  {n:'xe tải',p:[m(B,r(30,60,170,80,4)),m(S,r(25,138,260,8,2)),m(R,p('200,85 235,85 280,105 280,140 200,140')),m(L,p('208,92 232,92 262,108 208,108')),m(Y,r(30,100,170,8)),m(K,c(70,150,20),c(130,150,20),c(240,150,20)),m(W,c(70,150,8),c(130,150,8),c(240,150,8)),m(Y,r(272,116,10,12,3)),m(S,r(195,50,8,40,2)),m(W,c(115,82,10))]},
+  {n:'đĩa bay',p:[m(Y,p('125,150 195,150 230,185 90,185')),m(K,r(110,125,100,22,10)),m(L,c(160,80,35)),m(G,c(160,82,15)),m(K,c(154,80,3),c(166,80,3)),m(S,r(60,95,200,35,17)),m(O,c(95,112,6),c(130,112,6),c(160,112,6),c(190,112,6),c(225,112,6)),m(S,r(158,35,3,15,1),c(160,32,5)),m(Y,c(30,30,4),c(280,40,5),c(50,70,3),c(260,20,3),c(300,100,4)),m(W,c(40,160,14))]},
+  {n:'người tuyết',p:[m(W,c(160,140,42)),m(W,c(160,88,32)),m(W,c(160,48,24)),m(K,r(138,15,44,18,2),r(128,30,64,6,2)),m(O,p('160,48 188,52 160,56')),m(K,c(152,43,3),c(168,43,3)),m(K,c(160,90,3),c(160,102,3),c(160,128,3),c(160,142,3)),m(N,r(105,86,48,4,2),r(167,86,48,4,2)),m(R,r(135,68,50,10,4)),m(L,r(10,178,300,8,2))]},
+  {n:'cối xay gió',p:[m(W,p('125,175 195,175 185,70 135,70')),m(R,p('125,72 160,38 195,72')),m(N,r(147,140,26,35,3)),m(L,r(150,95,20,20,3)),m(Y,p('155,68 155,10 165,10 165,68'),p('155,72 155,132 165,132 165,72'),p('158,65 100,65 100,75 158,75'),p('162,65 220,65 220,75 162,75')),m(K,c(160,70,8)),m(G,r(10,175,300,10,2)),m(O,c(40,40,16)),m(W,c(250,40,10),c(268,36,13),c(285,40,9)),m(N,r(215,155,3,20),r(240,155,3,20),r(265,155,3,20),r(212,160,70,3))]},
+  {n:'hải đăng',p:[m(W,p('125,175 195,175 185,60 135,60')),m(R,p('131,150 189,150 187,130 133,130'),p('135,110 185,110 183,90 137,90')),m(Y,r(140,40,40,22,2)),m(R,p('135,40 160,15 185,40')),m(N,r(148,148,24,27,12)),m(L,r(152,70,16,12,2)),m(S,p('90,185 120,170 200,165 240,185')),m(B,r(10,178,300,12)),m(Y,p('185,50 305,20 305,80')),m(O,c(45,40,20))]},
+  {n:'máy xúc',p:[m(K,r(55,140,150,35,17)),m(S,c(80,157,10),c(130,157,10),c(180,157,10)),m(R,r(55,125,150,15,2)),m(Y,r(75,85,70,45,4)),m(L,r(85,93,40,28,3)),m(O,r(50,100,25,30,4)),m(Y,p('140,100 200,50 215,62 150,115')),m(Y,p('200,50 255,95 245,108 195,62')),m(S,p('245,100 285,115 270,140 235,125')),m(K,r(80,70,6,16,1))]},
+  {n:'xe cảnh sát',p:[m(B,r(40,105,240,35,8)),m(W,p('100,105 130,65 210,65 240,105')),m(L,p('112,100 135,72 160,72 160,100'),p('168,72 202,72 225,100 168,100')),m(R,r(145,52,30,13,3)),m(B,r(175,52,30,13,3)),m(W,r(40,118,240,8)),m(K,c(95,148,24),c(225,148,24)),m(S,c(95,148,10),c(225,148,10)),m(Y,r(272,112,10,12,3)),m(R,r(38,112,10,12,3))]},
+  {n:'con rùa',p:[m(G,r(80,60,150,70,45)),m(Y,r(85,125,140,12,6)),m(G,r(95,130,28,30,8),r(190,130,28,30,8)),m(G,r(225,85,50,35,15)),m(G,p('80,110 55,118 80,125')),m(Y,c(120,85,10),c(155,80,10),c(190,85,10)),m(K,c(262,98,3)),m(R,r(262,110,14,3,1)),m(N,r(10,170,300,10,3)),m(O,c(40,40,16))]},
+  {n:'bông hoa',p:[m(G,r(155,100,10,75,3)),m(G,p('160,150 115,125 125,148')),m(G,p('160,140 205,115 198,138')),m(R,c(160,38,17),c(190,60,17)),m(R,c(178,96,17),c(142,96,17),c(130,60,17)),m(Y,c(160,70,18)),m(O,p('120,152 200,152 190,185 130,185')),m(B,r(115,142,90,12,3)),m(O,c(40,35,16)),m(W,c(250,30,10),c(268,27,13))]},
+  {n:'con bướm',p:[m(O,c(125,125,28),c(195,125,28)),m(P,c(110,70,38),c(210,70,38)),m(K,r(155,60,10,70,5)),m(K,c(160,52,10)),m(K,p('156,48 135,15 139,13 160,45'),p('164,48 185,15 181,13 160,45')),m(Y,c(105,68,12),c(215,68,12)),m(W,c(122,122,8),c(198,122,8)),m(G,r(10,175,300,10,2)),m(O,c(40,35,16)),m(W,c(250,30,10),c(268,27,13))]},
+  {n:'xe đua',p:[m(R,r(40,105,250,32,12)),m(L,p('125,105 150,72 195,72 210,105')),m(Y,c(172,88,10)),m(K,c(85,142,26),c(240,142,26)),m(Y,c(85,142,10),c(240,142,10)),m(B,r(270,130,30,6,2),r(290,115,6,26,2)),m(B,r(30,85,50,8,2),r(40,92,6,15,1)),m(W,c(110,121,9)),m(Y,r(140,117,90,5,2)),m(O,p('40,115 15,122 40,130'))]},
+  {n:'toà nhà',p:[m(B,r(110,30,100,145,2)),m(R,r(105,25,110,8,2)),m(S,r(158,5,4,22,1),c(160,5,5)),m(L,r(125,45,18,14,1),r(150,45,18,14,1),r(175,45,18,14,1)),m(L,r(125,75,18,14,1),r(150,75,18,14,1),r(175,75,18,14,1)),m(L,r(125,105,18,14,1),r(150,105,18,14,1),r(175,105,18,14,1)),m(N,r(145,140,30,35,2)),m(O,r(40,90,60,85,2)),m(G,r(220,110,60,65,2)),m(K,r(10,175,300,10,2))]},
+  {n:'cây thông',p:[m(N,r(145,150,30,25,2)),m(G,p('160,85 75,155 245,155')),m(G,p('160,50 90,115 230,115')),m(G,p('160,20 105,75 215,75')),m(Y,p('160,3 166,16 180,16 169,25 173,38 160,30 147,38 151,25 140,16 154,16')),m(R,c(140,128,6),c(185,132,6),c(165,98,6),c(150,68,6)),m(B,c(112,142,6),c(210,142,6),c(130,100,6),c(190,98,6)),m(R,r(60,150,40,25,2)),m(B,r(225,150,45,25,2)),m(L,r(10,175,300,10,2))]}
+  ]);
+  /* Âm thanh (tạo bằng Web Audio, không cần tệp ngoài) */
+  var ac=null, muted=false;
+  function audio(){
+    if(!ac){ try{ ac=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
+    if(ac&&ac.state==='suspended'){ ac.resume(); }
+    return ac;
   }
-
-  function panTo(clientX, clientY){
-    const rect = container.getBoundingClientRect();
-    const offsetX = clientX - rect.left - rect.width / 2;
-    const offsetY = clientY - rect.top - rect.height / 2;
-    const maxX = (scale - 1) * rect.width / 2;
-    const maxY = (scale - 1) * rect.height / 2;
-    tx = Math.min(maxX, Math.max(-maxX, -offsetX * (scale - 1)));
-    ty = Math.min(maxY, Math.max(-maxY, -offsetY * (scale - 1)));
-    apply(false);
+  function tone(f,t0,d,type,vol){
+    var a=audio(); if(!a||muted) return;
+    var o=a.createOscillator(), g=a.createGain(), s=a.currentTime+t0;
+    o.type=type||'sine'; o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,s);
+    g.gain.exponentialRampToValueAtTime(vol||0.2,s+0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001,s+d);
+    o.connect(g); g.connect(a.destination); o.start(s); o.stop(s+d+0.05);
   }
+  function sfxOk(){ tone(659,0,.14,'triangle',.28); tone(988,.09,.3,'triangle',.28); tone(1319,.2,.12,'sine',.1); }
+  function sfxBad(){ tone(240,0,.18,'square',.09); tone(180,.14,.3,'square',.09); }
+  function sfxWin(){
+    var n=[523,659,784,1047,784,1047,1319,1568], t=[0,.15,.3,.45,.7,.85,1,1.2], i;
+    for(i=0;i<n.length;i++) tone(n[i],t[i],i===n.length-1?.8:.22,'triangle',.3);
+    tone(262,0,1.8,'sine',.12); tone(392,.45,1.6,'sine',.1);
+  }
+  function sfxEnd(){ tone(523,0,.25,'triangle',.25); tone(659,.15,.25,'triangle',.25); tone(784,.3,.5,'triangle',.25); }
+  document.getElementById('mute').addEventListener('click',function(){
+    muted=!muted;
+    this.setAttribute('aria-pressed',muted?'true':'false');
+    this.textContent=muted?'🔇 Tắt tiếng':'🔊 Có tiếng';
+    if(!muted) sfxOk();
+  });
 
-  function toggleZoom(clientX, clientY){
-    if(scale === 1){
-      scale = ZOOM;
-      panTo(clientX, clientY);
+  /* Hiệu ứng ăn mừng: pháo giấy */
+  var fx=document.getElementById('fx'), fctx=fx.getContext('2d'), parts=[], raf=0, fxT=[], pending=0;
+  function sizeFx(){
+    var d=window.devicePixelRatio||1;
+    fx.width=innerWidth*d; fx.height=innerHeight*d; fctx.setTransform(d,0,0,d,0,0);
+  }
+  window.addEventListener('resize',sizeFx);
+  function stopFx(){
+    var i; for(i=0;i<fxT.length;i++) clearTimeout(fxT[i]);
+    fxT=[]; pending=0; parts=[]; cancelAnimationFrame(raf);
+    fctx.clearRect(0,0,innerWidth,innerHeight);
+  }
+  function burst(n,x,y){
+    var cols=[R,Y,B,G,O,P], i;
+    for(i=0;i<n;i++) parts.push({x:x,y:y,vx:(Math.random()-.5)*14,vy:-Math.random()*13-5,g:.3,w:6+Math.random()*6,h:8+Math.random()*8,rot:Math.random()*6,vr:(Math.random()-.5)*.35,col:cols[i%6],life:0,max:130+Math.random()*60});
+  }
+  function rain(n){
+    var cols=[R,Y,B,G,O,P], i;
+    for(i=0;i<n;i++) parts.push({x:Math.random()*innerWidth,y:-10-Math.random()*80,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,g:.02,w:6+Math.random()*6,h:8+Math.random()*8,rot:Math.random()*6,vr:(Math.random()-.5)*.3,col:cols[i%6],life:0,max:220});
+  }
+  function later(fn,ms){
+    pending++;
+    fxT.push(setTimeout(function(){ pending--; fn(); loop(); },ms));
+  }
+  function loop(){
+    cancelAnimationFrame(raf);
+    fctx.clearRect(0,0,innerWidth,innerHeight);
+    var i, o;
+    for(i=parts.length-1;i>=0;i--){
+      o=parts[i]; o.vy+=o.g; o.vx*=.99; o.x+=o.vx; o.y+=o.vy; o.rot+=o.vr; o.life++;
+      if(o.y>innerHeight+20||o.life>o.max){ parts.splice(i,1); continue; }
+      fctx.save(); fctx.globalAlpha=o.life>o.max*.8?(o.max-o.life)/(o.max*.2):1;
+      fctx.translate(o.x,o.y); fctx.rotate(o.rot); fctx.fillStyle=o.col;
+      fctx.fillRect(-o.w/2,-o.h/2,o.w,o.h); fctx.restore();
+    }
+    if(parts.length||pending>0) raf=requestAnimationFrame(loop);
+  }
+  function celebrate(full){
+    if(full) sfxWin(); else sfxEnd();
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    sizeFx(); stopFx();
+    var w=innerWidth, h=innerHeight, k=full?70:25;
+    burst(k,w*.15,h*.75); burst(k,w*.85,h*.75);
+    if(full){
+      later(function(){ burst(60,w*.5,h*.8); },500);
+      later(function(){ rain(90); },900);
+      later(function(){ burst(60,w*.25,h*.7); burst(60,w*.75,h*.7); },1400);
+    }
+    loop();
+  }
+  function cap1(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+  function pickModel(){
+    var i; do{ i=rnd(0,MODELS.length-1); }while(i===lastModel);
+    lastModel=i; model=MODELS[i];
+  }
+  var mode="mix", answer=0, q=0, right=0, locked=false;
+  var $=function(id){return document.getElementById(id)};
+  var problem=$("problem"), ans=$("ans"), msg=$("msg");
+  var praise=["Giỏi quá!","Chính xác!","Tuyệt vời!","Làm tốt lắm!","Con giỏi lắm!"];
+  function rnd(lo,hi){return Math.floor(Math.random()*(hi-lo+1))+lo}
+  function setMsg(t,c){msg.textContent=t;msg.className="msg"+(c?" "+c:"")}
+
+  function drawLego(n,popIdx){
+    var s='<svg viewBox="0 0 320 190" xmlns="http://www.w3.org/2000/svg">', i, k;
+    for(i=0;i<model.p.length;i++){
+      var on=i<n, f=on?model.p[i][0]:"none";
+      var at=' fill="'+f+'" stroke="'+(on?'var(--line)':'var(--slot)')+'" stroke-width="'+(on?2.5:2)+'" stroke-linejoin="round"'+(on?'':' stroke-dasharray="6 4"');
+      s+='<g'+(i===popIdx?' class="pop"':'')+'>';
+      for(k=0;k<model.p[i][1].length;k++){
+        var h=model.p[i][1][k];
+        if(h[0]==="r") s+='<rect x="'+h[1]+'" y="'+h[2]+'" width="'+h[3]+'" height="'+h[4]+'" rx="'+h[5]+'"'+at+'/>';
+        else if(h[0]==="c") s+='<circle cx="'+h[1]+'" cy="'+h[2]+'" r="'+h[3]+'"'+at+'/>';
+        else s+='<polygon points="'+h[1]+'"'+at+'/>';
+      }
+      s+='</g>';
+    }
+    $("lego").innerHTML=s+'</svg>';
+    $("lego").setAttribute("aria-label","Hình "+model.n+" Lego: "+n+"/10 mảnh");
+  }
+  function stats(){ $("right").textContent=right; $("qnum").textContent=Math.min(q+1,TOTAL); }
+
+  function next(){
+    var op = mode==="mix" ? (Math.random()<0.5?"mul":"div") : mode;
+    var x=rnd(2,9), y=rnd(2,9);
+    if(op==="mul"){ answer=x*y; problem.textContent=x+" × "+y+" = ?"; }
+    else { answer=x; problem.textContent=(x*y)+" ÷ "+y+" = ?"; }
+    ans.value=""; locked=false; stats(); ans.focus();
+  }
+  function finish(){
+    $("play").hidden=true; $("end").hidden=false; stats();
+    var full=right===TOTAL;
+    celebrate(full);
+    $("legoBox").classList.toggle("done",full);
+    $("cap").textContent=full?cap1(model.n)+" Lego đã hoàn thành!":"Con xây được "+right+"/10 mảnh "+model.n;
+    $("endTitle").textContent=full?"🎉 Hoàn hảo! 10/10":"Con đúng "+right+"/10 câu";
+    $("endText").textContent=full?"Con đã xây xong "+model.n+" Lego. Giỏi quá!":"Chơi lại để xây một hình mới nhé!";
+  }
+  function advance(delay){
+    setTimeout(function(){
+      q++; stats();
+      if(q>=TOTAL){ finish(); } else { setMsg("Câu tiếp theo nào!",""); next(); }
+    },delay);
+  }
+  function check(){
+    if(locked) return;
+    var v=ans.value.trim();
+    if(v===""){ setMsg("Con nhập đáp án trước nhé!","bad"); ans.focus(); return; }
+    locked=true;
+    if(parseInt(v,10)===answer){
+      right++; $("right").textContent=right; drawLego(right,right-1); sfxOk();
+      setMsg(praise[rnd(0,praise.length-1)],"ok"); advance(1200);
     } else {
-      scale = 1; tx = 0; ty = 0;
-      apply(true);
+      setMsg("Chưa đúng. Đáp án là "+answer,"bad"); sfxBad();
+      problem.classList.remove("shake"); void problem.offsetWidth; problem.classList.add("shake");
+      advance(2200);
     }
   }
-
-  img.addEventListener('click', e=>{
-    toggleZoom(e.clientX, e.clientY);
-  });
-
-  img.addEventListener('mousemove', e=>{
-    if(scale === 1) return;
-    panTo(e.clientX, e.clientY);
-  });
-
-  img.addEventListener('touchstart', e=>{
-    if(e.touches.length !== 1) return;
-    if(scale > 1) panTo(e.touches[0].clientX, e.touches[0].clientY);
-  }, {passive:true});
-  img.addEventListener('touchmove', e=>{
-    if(scale === 1 || e.touches.length !== 1) return;
-    panTo(e.touches[0].clientX, e.touches[0].clientY);
-  }, {passive:true});
-  img.addEventListener('touchend', e=>{
-    const t = e.changedTouches[0];
-    toggleZoom(t.clientX, t.clientY);
-  });
-
-  apply(false);
-}
-
-const grid = document.getElementById('grid');
-const detail = document.getElementById('detail');
-const countRow = document.getElementById('count');
-const searchInput = document.getElementById('search');
-const catRow = document.getElementById('catRow');
-let currentCategory = 'all';
-
-function renderGrid(){
-  const q = searchInput.value.trim().toLowerCase();
-  const list = products.filter(p =>
-    (currentCategory === 'all' || p.category === currentCategory) &&
-    p.title.toLowerCase().includes(q)
-  );
-  grid.innerHTML = list.map(cardHTML).join('');
-  countRow.textContent = `${list.length} / ${products.length} sản phẩm`;
-  grid.querySelectorAll('.card').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      selectedId = Number(el.dataset.id);
-      renderGrid();
-      renderDetail();
-      if(window.innerWidth <= 980){
-        detail.scrollIntoView({behavior:'smooth', block:'start'});
-      }
+  function start(){
+    q=0; right=0; locked=false; stopFx();
+    $("play").hidden=false; $("end").hidden=true;
+    $("legoBox").classList.remove("done");
+    pickModel();
+    $("cap").textContent="Đang xây: "+model.n+" Lego. Mỗi câu đúng thêm 1 mảnh!";
+    drawLego(0,-1); setMsg("Hãy nhập đáp án nhé!",""); next();
+  }
+  ans.addEventListener("input",function(){ ans.value=ans.value.replace(/\D/g,""); });
+  ans.addEventListener("keydown",function(e){ if(e.key==="Enter") check(); });
+  $("check").addEventListener("click",check);
+  $("again").addEventListener("click",start);
+  document.querySelectorAll(".chip").forEach(function(c){
+    c.addEventListener("click",function(){
+      mode=c.dataset.mode;
+      document.querySelectorAll(".chip").forEach(function(o){o.setAttribute("aria-pressed",o===c?"true":"false")});
+      start();
     });
   });
-}
-
-function renderDetail(){
-  const p = products.find(x=>x.id===selectedId) || products[0];
-  detail.innerHTML = detailHTML(p);
-  setupZoom();
-}
-
-searchInput.addEventListener('input', renderGrid);
-catRow.addEventListener('click', e=>{
-  const btn = e.target.closest('.cat-btn');
-  if(!btn) return;
-  currentCategory = btn.dataset.cat;
-  catRow.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('active', b===btn));
-  renderGrid();
-});
-
-renderGrid();
-renderDetail();
+  start();
+})();
 </script>
 </body>
 </html>
